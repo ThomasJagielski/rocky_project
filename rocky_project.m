@@ -42,7 +42,7 @@ angle_rad_normalized = angle_rad - angle_rad(end);
 % Fitting Data
 t_fit = t(peak_index);
 
-zeta_omegan = 0.2%021; % From curve fitting session
+zeta_omegan = 0.2021; % From curve fitting session
 
 damping_fit_time = mean(diff(t(peak_index)));
 
