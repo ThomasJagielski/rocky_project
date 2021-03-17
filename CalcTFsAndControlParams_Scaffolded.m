@@ -19,7 +19,8 @@ pretty(simplify(Htot)) % display the total transfer function
 g = 9.85; % gravitational acceleration
 l = 0.4217; % pendulum length [meters] 
 a = 0.326086956521739;
-b = 0.063775510204082
+%b = 0.0576;
+b = 0.063775510204082;
 % a = 14; % motor control parameter
 % b = 1/400; % motor time constant
 
@@ -27,11 +28,14 @@ Htot_subbed = subs(Htot); % substitutes parameters defined above into Htot
 
 % define the target poles
 
-p1 = -3 + 2*pi*i
-p2 = -3 - 2*pi*i
-p3 = -10
-p4 = -2
-p5 = -3
+zeta = 0.0457;
+wn = 4.4188 / (2*pi);
+
+p1 = -zeta*wn + (1j *(wn*sqrt(1-zeta^2)))
+p2 = -zeta*wn - (1j *(wn*sqrt(1-zeta^2)))
+p3 = -0.01
+p4 = -0.02
+p5 = -5
 
 % this is the target characteristic polynomial
 tgt_char_poly = (s-p1)*(s-p2)*(s-p3)*(s-p4)*(s-p5);
