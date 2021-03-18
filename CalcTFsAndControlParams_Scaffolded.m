@@ -17,10 +17,11 @@ pretty(simplify(Htot)) % display the total transfer function
 
 % system parameters
 g = 9.85; % gravitational acceleration
-l = 0.4217; % pendulum length [meters] 
-a = 0.326086956521739;
+l = 0.501900218811287; % pendulum length [meters] 
+a = 33.5324 %0.326086956521739;
 %b = 0.0576;
-b = 0.063775510204082;
+%b = 5.78e-4;
+b = 0.00507; %WORKSSSSSSSS
 % a = 14; % motor control parameter
 % b = 1/400; % motor time constant
 
@@ -29,13 +30,13 @@ Htot_subbed = subs(Htot); % substitutes parameters defined above into Htot
 % define the target poles
 
 zeta = 0.0457;
-wn = 4.4188 / (2*pi);
+wn = 4.4188;
 
-p1 = -zeta*wn + (1j *(wn*sqrt(1-zeta^2)))
-p2 = -zeta*wn - (1j *(wn*sqrt(1-zeta^2)))
-p3 = -0.01
-p4 = -0.02
-p5 = -5
+p1 = -wn + (1j *(wn*sqrt(1-zeta^2)))
+p2 = -wn - (1j *(wn*sqrt(1-zeta^2)))
+p3 = -1
+p4 = -2
+p5 = -80
 
 % this is the target characteristic polynomial
 tgt_char_poly = (s-p1)*(s-p2)*(s-p3)*(s-p4)*(s-p5);
@@ -58,10 +59,17 @@ solutions = solve(coeffs_denom == coeffs_tgt, Jp, Ji, Kp, Ki, Ci);
 
 % display the solutions as double precision numbers
 
-Jp = double(solutions.Jp)
-Ji = double(solutions.Ji)
-Kp = double(solutions.Kp)
-Ki = double(solutions.Ki)
-Ci = double(solutions.Ci)
+Jp = double(solutions.Jp);
+Ji = double(solutions.Ji);
+Kp = double(solutions.Kp);
+Ki = double(solutions.Ki);
+Ci = double(solutions.Ci);
+
+disp(['float Jp = ',num2str(real(Jp)),';'])
+disp(['float Ji = ',num2str(real(Ji)),';'])
+disp(['float Kp = ',num2str(real(Kp)),';'])
+disp(['float Ki = ',num2str(real(Ki)),';'])
+disp(['float Ci = ',num2str(real(Ci)),';'])
+
 
 impulse_response_from_sym_expression(subs(Htot))
