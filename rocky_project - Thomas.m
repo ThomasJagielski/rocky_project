@@ -5,31 +5,46 @@
 
 %% Base System
 % A)
-steptest_data = load('steptest.mat');
-sinetest150_data = load('sinetest150.mat');
-sinetest200_data = load('sinetest200.mat');
+%steptest_data = load('steptest.mat');
+%sinetest150_data = load('sinetest150.mat');
+%sinetest200_data = load('sinetest200.mat');
 
-fit_t = steptest_data.t(1:150);
-fit_R = abs(steptest_data.outputR(1:150));
-fit_L = abs(steptest_data.outputL(1:150));
+steptest_data = csvread('motordata-thomas.csv',0,0);
+steptest_left = [0; steptest_data(:,1)]% - steptest_data(1,1);
+steptest_right = [0; steptest_data(:,2)]% - steptest_data(2,1);
+steptest_time = (0:20e-3:20e-3*(max(size(steptest_data))));
 
-VinK_R = mean(steptest_data.outputR(82:150));
-VinK_L = mean(steptest_data.outputL(82:150));
-Vin = -200;
+VinK_R = mean(steptest_left(80:160));
+VinK_L = mean(steptest_right(80:160));
+Vin = 300;
 
 %%% Parameters!!!! %%%
 Kr = VinK_R / Vin;
 Kl = VinK_L / Vin;
 
-tau_R = 1 / 17.35; % found through cftool fitting
-tau_L = 1 / 15.68; % found through cftool fitting
+tauR = 0.0794;
+tauL = 0.08451;
 
-%%% End Parameters!!!! %%%
+%aR = tauR / Kr;
+%aL = tauL / Kl;
 
+tau = mean([tauR, tauL])
+%a = mean([aR, aL])
+
+%a = 12.2018;
+a = 11.83;
+b = 0.06338;
+
+K = (a*b)*tau
+
+
+
+%%
 figure
-plot(steptest_data.t,steptest_data.outputL)
+plot(steptest_time, steptest_left,'b.')
 hold on
-plot(steptest_data.t,steptest_data.outputR)
+plot(steptest_time(80:160) ,steptest_right(80:160),'*')
+plot(steptest_time, steptest_right,'r.')
 hold off
 
 %%
@@ -66,3 +81,17 @@ hold off
 
 % Much like the rocky robot my total height is 6' 5" but my effective 
 % length is slightly shorter at 5' 8".
+%%
+% C)
+
+%Want to set osicallation freq = to natural freq of the pendulumn sytstem
+%Set disturbacne to be small square wave osciallation, criticially damped
+%response will reach equilibrium as fast as possible 
+
+
+
+% D)
+
+
+
+

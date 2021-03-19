@@ -143,7 +143,7 @@ void loop()
 
 
   // turn motor on for 3 seconds 
-  if(cur_time > 3000)
+  if(cur_time > 5000)
       motors.setSpeeds((int16_t) (0), (int16_t)(0));
   else
     motors.setSpeeds((int16_t) (300), (int16_t)(300));
@@ -155,7 +155,7 @@ void loop()
     prev_time = cur_time;
   }
 
-  if((cur_time - prev_print_time > 20) && cur_time<3000)   // print data every 20 ms
+  if((cur_time - prev_print_time > 20) && cur_time<5000)   // print data every 20 ms
   {
         Serial.print(measured_speedL);  // speed in cm/s
         Serial.print(",");      
@@ -166,4 +166,3 @@ void loop()
 
  
 }
-
