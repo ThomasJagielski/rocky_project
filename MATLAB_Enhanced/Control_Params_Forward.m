@@ -2,7 +2,7 @@ syms s a b l g Kp Ki Jp Ji  % define symbolic variables
 
 Hvtheta = -s/l/(s^2-g/l); % TF from velocity to angle of pendulum
 K = Kp + Ki/s;  % TF of the angle controller
-J = 10*Jp + Ji/s; % TF of the controller around the motor
+J = 0.05*Jp + Ji/s; % TF of the controller around the motor
 M = a*b/(s+a)  % TF of motor
 Md = M/(1+M*J)  % TF of motor + feedback controller around it 
                 % J is applied on the feedback path
