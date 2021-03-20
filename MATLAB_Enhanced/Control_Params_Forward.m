@@ -1,8 +1,8 @@
-syms s a b l g Kp Ki Jp Ci  % define symbolic variables
+syms s a b l g Kp Ki Jp Ji  % define symbolic variables
 
 Hvtheta = -s/l/(s^2-g/l); % TF from velocity to angle of pendulum
 K = Kp + Ki/s;  % TF of the angle controller
-J = .25*Jp + Ci/s^2; % TF of the controller around the motor
+J = 10*Jp + Ji/s; % TF of the controller around the motor
 M = a*b/(s+a)  % TF of motor
 Md = M/(1+M*J)  % TF of motor + feedback controller around it 
                 % J is applied on the feedback path
@@ -53,18 +53,18 @@ coeffs_tgt = coeffs(tgt_char_poly, s);
 
 % solve the system of equations setting the coefficients of the
 % polynomial in the target to the actual polynomials
-solutions = solve(coeffs_denom == coeffs_tgt, Jp, Kp, Ki, Ci);
+solutions = solve(coeffs_denom == coeffs_tgt, Jp, Ji, Kp, Ki);
 
 % display the solutions as double precision numbers
 
 Jp = double(solutions.Jp);
+Ji = double(solutions.Ji);
 Kp = double(solutions.Kp);
 Ki = double(solutions.Ki);
-Ci = double(solutions.Ci);
 
 disp(['float Jp = ',num2str(real(Jp)),';'])
+disp(['float Ji = ',num2str(real(Ji)),';'])
 disp(['float Kp = ',num2str(real(Kp)),';'])
 disp(['float Ki = ',num2str(real(Ki)),';'])
-disp(['float Ci = ',num2str(real(Ci)),';'])
 
 impulse_response_from_sym_expression(subs(Htot))
