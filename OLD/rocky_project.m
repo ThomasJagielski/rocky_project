@@ -5,46 +5,31 @@
 
 %% Base System
 % A)
-%steptest_data = load('steptest.mat');
-%sinetest150_data = load('sinetest150.mat');
-%sinetest200_data = load('sinetest200.mat');
+steptest_data = load('steptest.mat');
+sinetest150_data = load('sinetest150.mat');
+sinetest200_data = load('sinetest200.mat');
 
-steptest_data = csvread('motordata-thomas.csv',0,0);
-steptest_left = [0; steptest_data(:,1)]% - steptest_data(1,1);
-steptest_right = [0; steptest_data(:,2)]% - steptest_data(2,1);
-steptest_time = (0:20e-3:20e-3*(max(size(steptest_data))));
+fit_t = steptest_data.t(1:150);
+fit_R = abs(steptest_data.outputR(1:150));
+fit_L = abs(steptest_data.outputL(1:150));
 
-VinK_R = mean(steptest_left(80:160));
-VinK_L = mean(steptest_right(80:160));
-Vin = 300;
+VinK_R = mean(steptest_data.outputR(82:150));
+VinK_L = mean(steptest_data.outputL(82:150));
+Vin = -200;
 
 %%% Parameters!!!! %%%
 Kr = VinK_R / Vin;
 Kl = VinK_L / Vin;
 
-tauR = 0.0794;
-tauL = 0.08451;
+tau_R = 1 / 17.35; % found through cftool fitting
+tau_L = 1 / 15.68; % found through cftool fitting
 
-%aR = tauR / Kr;
-%aL = tauL / Kl;
+%%% End Parameters!!!! %%%
 
-tau = mean([tauR, tauL])
-%a = mean([aR, aL])
-
-%a = 12.2018;
-a = 11.83;
-b = 0.06338;
-
-K = (a*b)*tau
-
-
-
-%%
 figure
-plot(steptest_time, steptest_left,'b.')
+plot(steptest_data.t,steptest_data.outputL)
 hold on
-plot(steptest_time(80:160) ,steptest_right(80:160),'*')
-plot(steptest_time, steptest_right,'r.')
+plot(steptest_data.t,steptest_data.outputR)
 hold off
 
 %%
