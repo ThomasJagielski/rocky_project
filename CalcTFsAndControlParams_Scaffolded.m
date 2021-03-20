@@ -1,7 +1,7 @@
-syms s a b l g Kp Ki Jp Ji Ci  % define symbolic variables
+syms s a b l g Kp Ki Jp Ji Ci Kd  % define symbolic variables
 
 Hvtheta = -s/l/(s^2-g/l); % TF from velocity to angle of pendulum
-K = Kp + Ki/s;  % TF of the angle controller
+K = s*Kd + Kp + Ki/s;  % TF of the angle controller
 J = Jp + Ji/s + Ci/s^2; % TF of the controller around the motor
 M = a*b/(s+a)  % TF of motor
 Md = M/(1+M*J)  % TF of motor + feedback controller around it 
@@ -21,12 +21,8 @@ l = 0.5019;
 %a = 34.4375; %1
 %b = 0.00820; %1
 a = 12.58;
-%b = 0.6464;
-b = 0.006338;
-
-%b = 0.00507; %WORKSSSSSSSS
 % a = 14; % motor control parameter
-%b = 1/400; % motor time constant
+b = 1/400; % motor time constant
 
 Htot_subbed = subs(Htot); % substitutes parameters defined above into Htot
 
@@ -40,6 +36,8 @@ p2 = -wn - wn * 1j
 p3 = -1
 p4 = -1
 p5 = -14
+p6 = -1.5
+
 
 %p1 = -wn + (1j *2*(wn*sqrt(1-zeta^2)))
 %p2 = -wn - (1j *2*(wn*sqrt(1-zeta^2)))
@@ -48,7 +46,7 @@ p5 = -14
 %p5 = -80
 
 % this is the target characteristic polynomial
-tgt_char_poly = (s-p1)*(s-p2)*(s-p3)*(s-p4)*(s-p5);
+tgt_char_poly = (s-p1)*(s-p2)*(s-p3)*(s-p4)*(s-p5)*(s-p6);
 
 % get the denominator from Htot_subbed
 [n d] = numden(Htot_subbed);
@@ -64,7 +62,7 @@ coeffs_tgt = coeffs(tgt_char_poly, s);
 
 % solve the system of equations setting the coefficients of the
 % polynomial in the target to the actual polynomials
-solutions = solve(coeffs_denom == coeffs_tgt, Jp, Ji, Kp, Ki, Ci);
+solutions = solve(coeffs_denom == coeffs_tgt, Jp, Ji, Kp, Ki, Ci, Kd);
 
 % display the solutions as double precision numbers
 
@@ -74,11 +72,13 @@ Kp = double(solutions.Kp);
 Ki = double(solutions.Ki);
 Ci = double(solutions.Ci);
 
+
 disp(['float Jp = ',num2str(real(Jp)),';'])
 disp(['float Ji = ',num2str(real(Ji)),';'])
 disp(['float Kp = ',num2str(real(Kp)),';'])
 disp(['float Ki = ',num2str(real(Ki)),';'])
 disp(['float Ci = ',num2str(real(Ci)),';'])
+
 
 
 impulse_response_from_sym_expression(subs(Htot))

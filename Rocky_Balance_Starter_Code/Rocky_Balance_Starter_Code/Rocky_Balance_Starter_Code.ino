@@ -86,25 +86,13 @@ void BalanceRocky()
 
     // Enter the control parameters here
 
-//    float Jp = 439.8174;
-//    float Ji = -2164.3264;
-//    float Kp = 4973.8343;
-//    float Ki = 23935.4466;
-//    float Ci = -941.9393;
     
-    float Jp = 17.3484;
-    float Ji = -85.371;
-    float Kp = 196.191;
-    float Ki = 944.1246;
-    float Ci = -37.1544;
+float Jp = 389.7488;
+float Ji = -2035.2926;
+float Kp = 4677.3021;
+float Ki = 22508.4526;
+float Ci = -885.7824;
 
-//    float Kp = 550; //493.3362;
-//    float Ki = 3e3; //2.4635e3;
-//
-//    float Ci = -0.001;
-//    
-//    float Jp = 275; //229.2801;
-//    float Ji = 0.5; //-0.1531;
 
     float v_c_L, v_c_R; // these are the control velocities to be sent to the motors
     float v_d = 0; // this is the desired speed produced by the angle controller
@@ -225,8 +213,8 @@ void GetMotorAndAngleMeasurements()
     // this is the derivative of the angle
     angle_rad_diff = (angle_rad-angle_prev_rad)/0.01;
     angle_prev_rad  = angle_rad;
- 
-}
+  
+  }
 
 void balanceResetAccumulators()
 {
