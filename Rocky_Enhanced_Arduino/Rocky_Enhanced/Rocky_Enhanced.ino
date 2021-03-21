@@ -87,10 +87,12 @@ void BalanceRocky()
     // Enter the control parameters here
 
     
-    float Jp = 7159.0461;
-    float Ji = -885.7824;
-    float Kp = 3719.9466;
-    float Ki = 18788.5059;
+
+float Jp = 143.1809;
+float Ji = -885.7824;
+float Kp = 3719.9466;
+float Ki = 18788.5059;
+
 
 
     float v_c_L, v_c_R; // these are the control velocities to be sent to the motors
