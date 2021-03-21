@@ -18,10 +18,8 @@ pretty(simplify(Htot)) % display the total transfer function
 % system parameters
 g = 9.85; % gravitational acceleration
 l = 0.5019;
-%a = 34.4375; %1
-%b = 0.00820; %1
-a = 12.58;
-% a = 14; % motor control parameter
+a = 11.83;
+%a = 12.58;
 b = 1/400; % motor time constant
 
 Htot_subbed = subs(Htot); % substitutes parameters defined above into Htot
