@@ -70,10 +70,6 @@ Balboa32U4ButtonA buttonA;
 
 #define FIXED_ANGLE_CORRECTION (0.26)  // Replace the value 0.25 with the value you obtained from the Gyro calibration procedure
 
-
-
-
-
 //////////////////////////////////////////////////////////////////////////////////////////////
 // This is the main function that performs the balancing
 // It gets called approximately once every 10 ms  by the code in loop()
@@ -86,14 +82,10 @@ void BalanceRocky()
 
     // Enter the control parameters here
 
-    
-
-float Jp = 143.1809;
-float Ji = -885.7824;
-float Kp = 3719.9466;
-float Ki = 18788.5059;
-
-
+    float Jp = 162.402;
+    float Ji = -941.9393;
+    float Kp = 3955.7843;
+    float Ki = 19979.6623;
 
     float v_c_L, v_c_R; // these are the control velocities to be sent to the motors
     float v_d = 0; // this is the desired speed produced by the angle controller
